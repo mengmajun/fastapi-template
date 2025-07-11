@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 max_tries = 60 * 5  # 5 minutes
 wait_seconds = 1
 
+# 功能：检查数据库连接
 
 @retry(
     stop=stop_after_attempt(max_tries),
@@ -24,6 +25,7 @@ def init(db_engine: Engine) -> None:
         with Session(db_engine) as session:
             # Try to create session to check if DB is awake
             session.exec(select(1))
+        logger.info("DB connection successful")
     except Exception as e:
         logger.error(e)
         raise e

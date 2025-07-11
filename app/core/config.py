@@ -25,9 +25,11 @@ def parse_cors(v: Any) -> list[str] | str:
 
 
 class Settings(BaseSettings):
+    # BaseSettings会自动读取环境变量并覆盖配置类中的属性
     model_config = SettingsConfigDict(
+        # 读取环境变量
         # Use top level .env file (one level above ./backend/)
-        env_file="../.env",
+        env_file="../../.env",
         env_ignore_empty=True,
         extra="ignore",
     )
@@ -118,3 +120,6 @@ class Settings(BaseSettings):
 
 
 settings = Settings()  # type: ignore
+
+if __name__ == "__main__":
+    print(settings)
