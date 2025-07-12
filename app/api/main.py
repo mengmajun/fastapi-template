@@ -10,5 +10,6 @@ api_router.include_router(utils.router)
 api_router.include_router(items.router)
 
 # 本地环境下，添加私有路由
+# 私有路由可以创建用户
 if settings.ENVIRONMENT == "local":
     api_router.include_router(private.router)

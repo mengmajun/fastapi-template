@@ -21,6 +21,10 @@ reusable_oauth2 = OAuth2PasswordBearer(
 
 
 def get_db() -> Generator[Session, None, None]:
+    # 数据库会话依赖
+    # 该函数会在请求处理过程中被调用，用于获取一个数据库会话
+    # 函数使用 yield 语句返回一个 Session 对象，该对象表示与数据库的连接会话
+    # 当请求处理完成后，会话会自动关闭，释放资源    
     with Session(engine) as session:
         yield session
 
@@ -28,6 +32,7 @@ def get_db() -> Generator[Session, None, None]:
 # 用于给参数添加注释，第一个参数是参数类型，第二个参数是参数来源
 # 表示数据库会话依赖 在 FastAPI 处理请求时， Depends(get_db) 会调用 get_db 函数，获取一个数据库会话，并将其注入到需要 SessionDep 的函数中
 SessionDep = Annotated[Session, Depends(get_db)]  
+# 表示令牌依赖 自动从请求头中提取令牌   
 TokenDep = Annotated[str, Depends(reusable_oauth2)]
 
 

@@ -40,6 +40,7 @@ class UpdatePassword(SQLModel):
 
 
 # Database model, database table inferred from class name
+# table=True 表示该类是数据库模型，数据库模型才会真实的在数据库中创建表   
 class User(UserBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     hashed_password: str
