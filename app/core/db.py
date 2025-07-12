@@ -23,7 +23,7 @@ def init_db(session: Session) -> None:
     from sqlmodel import SQLModel
 
     # This works because the models are already imported and registered from app.models
-    # models已经导入并注册了，直接创建表
+    # models已经导入并注册了，直接创建表，如果表存在，就不创建了
     SQLModel.metadata.create_all(engine)
 
     user = session.exec(select(User).where(User.email == settings.FIRST_SUPERUSER)).first()

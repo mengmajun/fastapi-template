@@ -10,7 +10,7 @@ from app.core.config import settings
 def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
 
-
+# 借助 Sentry 来监控和追踪错误
 if settings.SENTRY_DSN and settings.ENVIRONMENT != "local":
     sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)
 
@@ -20,7 +20,7 @@ app = FastAPI(
     generate_unique_id_function=custom_generate_unique_id,
 )
 
-# Set all CORS enabled origins
+# 允许所有CORS请求
 if settings.all_cors_origins:
     app.add_middleware(
         CORSMiddleware,
